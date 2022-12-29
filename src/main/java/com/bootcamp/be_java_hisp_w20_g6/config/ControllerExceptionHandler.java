@@ -19,4 +19,5 @@ public class ControllerExceptionHandler {
     public ResponseEntity<String> checkFolowerExists(FollowerExistsException followerExistsException){
         return new ResponseEntity<>(followerExistsException.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
 }

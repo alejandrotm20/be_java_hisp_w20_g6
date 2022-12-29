@@ -1,5 +1,6 @@
 package com.bootcamp.be_java_hisp_w20_g6.controller;
 
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersCountResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.service.Implement.UserServiceImpl;
 import com.bootcamp.be_java_hisp_w20_g6.service.Interface.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,11 @@ public class UserController {
     @PostMapping("/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<Boolean> followUser(@PathVariable int userId, @PathVariable int userIdToFollow){
         return new ResponseEntity<>(userService.followUser(userId, userIdToFollow), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/followers/count")
+    public ResponseEntity<FollowersCountResponseDto> countFollowers (@PathVariable int userId){
+        return new ResponseEntity<>(userService.getFollowersCount(userId), HttpStatus.OK);
     }
 
 }

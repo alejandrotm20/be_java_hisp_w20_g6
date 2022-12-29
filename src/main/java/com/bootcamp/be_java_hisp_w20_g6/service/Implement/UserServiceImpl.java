@@ -1,5 +1,6 @@
 package com.bootcamp.be_java_hisp_w20_g6.service.Implement;
 
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersCountResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.model.UserModel;
@@ -9,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -32,6 +32,17 @@ public class UserServiceImpl implements IUserService {
             }else{
                 throw new FollowerExistsException("Usuario ya esta siguiendo al vendedor.");
             }
+        }catch(NullPointerException e){
+            throw new UserExistsException("Usuario no existe.");
+        }
+    }
+
+    @Override
+    public FollowersCountResponseDto getFollowersCount(int id) {
+        try{
+            UserModel user = userRepository.getUserById(id);
+            return new FollowersCountResponseDto(id, user.getUser_name(), user.getFollowers().size());
+
         }catch(NullPointerException e){
             throw new UserExistsException("Usuario no existe.");
         }
