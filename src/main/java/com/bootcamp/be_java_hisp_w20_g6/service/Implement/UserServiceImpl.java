@@ -1,6 +1,8 @@
 package com.bootcamp.be_java_hisp_w20_g6.service.Implement;
 
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersCountResponseDto;
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersListResponseDto;
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.UserResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.model.UserModel;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -47,4 +51,24 @@ public class UserServiceImpl implements IUserService {
             throw new UserExistsException("Usuario no existe.");
         }
     }
+
+    @Override
+    public FollowersListResponseDto getFollowersList(int id) {
+        try{
+            UserModel user = userRepository.getUserById(id);
+            List<UserResponseDto> followers = getUserResponseDtos(user);
+            return new FollowersListResponseDto(id, user.getUser_name(), followers);
+
+        }catch(NullPointerException e){
+            throw new UserExistsException("Usuario no existe.");
+        }
+    }
+
+    private List<UserResponseDto> getUserResponseDtos(UserModel user) {
+        List<UserResponseDto> followers = user.getFollowers()
+                .stream()
+                .map(u -> new UserResponseDto(u , userRepository.getUserById(u).getUser_name())).collect(Collectors.toList());
+        return followers;
+    }
+
 }
