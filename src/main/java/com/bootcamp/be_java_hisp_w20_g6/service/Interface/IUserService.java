@@ -18,4 +18,5 @@ public interface IUserService {
 
     public UserModel getUserById(int id);
 
+    boolean unFollowUser(int idFollower, int idFollowed);
 }

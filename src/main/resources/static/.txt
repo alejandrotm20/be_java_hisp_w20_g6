@@ -4,3 +4,4 @@ US0003: localhost:8080/users/3/followers/list - GET
 US0004: localhost:8080/users/3/followed/list - GET
 US0005: localhost:8080/products/post -POST
 US0006: localhost:8080/products/followed/1/list - GET
+US0007: localhost:8080/users/3/unfollow/3 - POST

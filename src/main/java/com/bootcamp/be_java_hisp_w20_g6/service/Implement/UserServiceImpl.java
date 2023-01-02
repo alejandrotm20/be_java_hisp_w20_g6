@@ -5,6 +5,7 @@ import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersCountResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersListResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.UserResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerExistsException;
+import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerNotFoundException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserNotFoundException;
 import com.bootcamp.be_java_hisp_w20_g6.model.UserModel;
@@ -91,6 +92,24 @@ public class UserServiceImpl implements IUserService {
         return followers;
     }
 
-   
+    @Override
+    public boolean unFollowUser(int idFollower, int idFollowed) {
+        try{
+            UserModel unFollowed = userRepository.getUserById(idFollowed);
+            UserModel unFollower = userRepository.getUserById(idFollower);
+
+            ArrayList<Integer> fanFollowedList = unFollower.getFollowed();
+            int followIndex = fanFollowedList.indexOf(idFollower);
+            if(followIndex >= 0){
+                fanFollowedList.remove(followIndex);
+                unFollowed.getFollowers().remove((Integer) idFollowed);
+                return true;
+            }else{
+                throw new FollowerNotFoundException("Usuario no esta siguiendo al vendedor.");
+            }
+        }catch(NullPointerException e){
+            throw new UserExistsException("Usuario no existe.");
+        }
+    }
 
 }

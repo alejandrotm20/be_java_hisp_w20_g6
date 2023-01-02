@@ -1,6 +1,7 @@
 package com.bootcamp.be_java_hisp_w20_g6.config;
 
 import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerExistsException;
+import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerNotFoundException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserNotFoundException;
 
@@ -26,5 +27,11 @@ public class ControllerExceptionHandler {
     public ResponseEntity<String> userNotFound(UserNotFoundException userNotFoundException){
         return new ResponseEntity<>(userNotFoundException.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(FollowerNotFoundException.class)
+    public ResponseEntity<String> followerNotFound(FollowerNotFoundException followerNotFoundException){
+        return new ResponseEntity<>(followerNotFoundException.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }
