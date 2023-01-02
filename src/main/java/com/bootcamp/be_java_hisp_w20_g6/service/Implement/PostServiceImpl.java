@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +67,7 @@ public class PostServiceImpl implements IPostService {
                                     ,p.getProduct(),p.getCategory(),p.getPrice())
                     ));
         }
-
-        return new PostListResponseDTO(user_id,followedPost);
+        followedPost.sort(Comparator.comparing(PostResponseDTO::getDate).reversed());
+        return new PostListResponseDTO(user_id,followedPost );
     }
 }
