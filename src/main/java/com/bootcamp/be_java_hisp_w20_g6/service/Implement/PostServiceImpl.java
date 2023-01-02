@@ -1,8 +1,14 @@
 package com.bootcamp.be_java_hisp_w20_g6.service.Implement;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.PostListResponseDTO;
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.PostResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +52,21 @@ public class PostServiceImpl implements IPostService {
             postModel.setId(postRepository.idGenerator());
             postRepository.save(postModel);
             return true;
+    }
+
+    @Override
+    public PostListResponseDTO postFollowedLastWeeks(int user_id) {
+        LocalDate dateNow=LocalDate.now();
+        List<PostResponseDTO> followedPost=new ArrayList<>();
+        for(int id : userService.getUserById(user_id).getFollowed()){
+            postRepository.getPostList().stream().filter(p->p.getUser_id()==id)
+                    .filter(p-> Period.between(p.getDate(),dateNow).getDays()<=15)
+                    .forEach(p->followedPost.add(
+                            new PostResponseDTO(p.getUser_id(),p.getId(),p.getDate()
+                                    ,p.getProduct(),p.getCategory(),p.getPrice())
+                    ));
+        }
+
+        return new PostListResponseDTO(user_id,followedPost);
     }
 }

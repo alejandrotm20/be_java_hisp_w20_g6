@@ -3,6 +3,7 @@ package com.bootcamp.be_java_hisp_w20_g6.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import com.bootcamp.be_java_hisp_w20_g6.model.PostModel;
@@ -10,6 +11,7 @@ import com.bootcamp.be_java_hisp_w20_g6.model.ProductModel;
 
 
 @Repository
+@Getter
 public class PostRepository {
 
     private List<PostModel> postList;

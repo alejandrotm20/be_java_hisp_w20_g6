@@ -25,15 +25,15 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public boolean followUser(int idstar, int idfan) {
+    public boolean followUser( int idFollower,int idFollowed) {
         try{
-            UserModel followed = userRepository.getUserById(idstar);
-            UserModel follower = userRepository.getUserById(idfan);
+            UserModel followed = userRepository.getUserById(idFollowed);
+            UserModel follower = userRepository.getUserById(idFollower);
 
             ArrayList<Integer> fanFollowedList = follower.getFollowed();
-            if(!fanFollowedList.contains(idstar)){
-                fanFollowedList.add(idstar);
-                followed.getFollowers().add(idfan);
+            if(!fanFollowedList.contains(idFollowed)){
+                fanFollowedList.add(idFollowed);
+                followed.getFollowers().add(idFollower);
                 return true;
             }else{
                 throw new FollowerExistsException("Usuario ya esta siguiendo al vendedor.");

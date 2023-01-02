@@ -8,7 +8,7 @@ import com.bootcamp.be_java_hisp_w20_g6.model.UserModel;
 
 public interface IUserService {
 
-    public boolean followUser(int idFollowed, int idFollower);
+    public boolean followUser(int idFollower,int idFollowed);
 
     public FollowersCountResponseDto getFollowersCount(int id);
 
