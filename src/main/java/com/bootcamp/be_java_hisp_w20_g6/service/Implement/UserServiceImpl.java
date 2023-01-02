@@ -6,6 +6,7 @@ import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersListResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.UserResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserExistsException;
+import com.bootcamp.be_java_hisp_w20_g6.exception.UserNotFoundException;
 import com.bootcamp.be_java_hisp_w20_g6.model.UserModel;
 import com.bootcamp.be_java_hisp_w20_g6.repository.UserRepository;
 import com.bootcamp.be_java_hisp_w20_g6.service.Interface.IUserService;
@@ -40,6 +41,12 @@ public class UserServiceImpl implements IUserService {
         }catch(NullPointerException e){
             throw new UserExistsException("Usuario no existe.");
         }
+    }
+
+    public UserModel getUserById(int id){
+        UserModel user = userRepository.getUserById(id);
+        if(user == null) throw new UserNotFoundException("Usuario no existe");
+        return user;  
     }
 
     @Override
@@ -84,6 +91,6 @@ public class UserServiceImpl implements IUserService {
         return followers;
     }
 
-
+   
 
 }
