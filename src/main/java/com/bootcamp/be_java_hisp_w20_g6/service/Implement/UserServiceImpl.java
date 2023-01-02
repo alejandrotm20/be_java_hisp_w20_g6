@@ -1,5 +1,6 @@
 package com.bootcamp.be_java_hisp_w20_g6.service.Implement;
 
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowedListResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersCountResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersListResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.UserResponseDto;
@@ -56,7 +57,7 @@ public class UserServiceImpl implements IUserService {
     public FollowersListResponseDto getFollowersList(int id) {
         try{
             UserModel user = userRepository.getUserById(id);
-            List<UserResponseDto> followers = getUserResponseDtos(user);
+            List<UserResponseDto> followers = getUserResponseDtos(user.getFollowers());
             return new FollowersListResponseDto(id, user.getUser_name(), followers);
 
         }catch(NullPointerException e){
@@ -64,11 +65,25 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-    private List<UserResponseDto> getUserResponseDtos(UserModel user) {
-        List<UserResponseDto> followers = user.getFollowers()
+    @Override
+    public FollowedListResponseDto getFollowedList(int id) {
+        try{
+            UserModel user = userRepository.getUserById(id);
+            List<UserResponseDto> followers = getUserResponseDtos(user.getFollowed());
+            return new FollowedListResponseDto(id, user.getUser_name(), followers);
+
+        }catch(NullPointerException e){
+            throw new UserExistsException("Usuario no existe.");
+        }
+    }
+
+    private List<UserResponseDto> getUserResponseDtos(List<Integer> userList) {
+        List<UserResponseDto> followers = userList
                 .stream()
                 .map(u -> new UserResponseDto(u , userRepository.getUserById(u).getUser_name())).collect(Collectors.toList());
         return followers;
     }
+
+
 
 }

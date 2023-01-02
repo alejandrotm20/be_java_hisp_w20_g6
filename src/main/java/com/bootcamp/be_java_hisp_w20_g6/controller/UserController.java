@@ -1,8 +1,8 @@
 package com.bootcamp.be_java_hisp_w20_g6.controller;
 
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowedListResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersCountResponseDto;
 import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersListResponseDto;
-import com.bootcamp.be_java_hisp_w20_g6.service.Implement.UserServiceImpl;
 import com.bootcamp.be_java_hisp_w20_g6.service.Interface.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +27,11 @@ public class UserController {
     @GetMapping("/{userId}/followers/list")
     public ResponseEntity<FollowersListResponseDto> listFollowers(@PathVariable int userId){
         return new ResponseEntity<>(userService.getFollowersList(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/followed/list")
+    public ResponseEntity<FollowedListResponseDto> listFollowed(@PathVariable int userId){
+        return new ResponseEntity<>(userService.getFollowedList(userId), HttpStatus.OK);
     }
 
 }

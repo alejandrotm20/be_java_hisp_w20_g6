@@ -1,4 +1,13 @@
 package com.bootcamp.be_java_hisp_w20_g6.dto.response;
 
+import lombok.AllArgsConstructor;
+
+import java.util.List;
+
+@AllArgsConstructor
 public class FollowedListResponseDto {
+
+    private int user_id;
+    private String user_name;
+    private List<UserResponseDto> followed;
 }
