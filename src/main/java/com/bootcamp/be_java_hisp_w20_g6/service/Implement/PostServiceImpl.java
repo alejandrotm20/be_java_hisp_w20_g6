@@ -56,7 +56,7 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    public PostListResponseDTO postFollowedLastWeeks(int user_id) {
+    public PostListResponseDTO postFollowedLastWeeks(int user_id, String orderBy) {
         LocalDate dateNow=LocalDate.now();
         List<PostResponseDTO> followedPost=new ArrayList<>();
         for(int id : userService.getUserById(user_id).getFollowed()){
@@ -67,7 +67,14 @@ public class PostServiceImpl implements IPostService {
                                     ,p.getProduct(),p.getCategory(),p.getPrice())
                     ));
         }
-        followedPost.sort(Comparator.comparing(PostResponseDTO::getDate).reversed());
+
+        if(orderBy != null && orderBy.equals("date_asc")) {
+            followedPost.sort(Comparator.comparing(PostResponseDTO::getDate));
+        }else{
+            followedPost.sort(Comparator.comparing(PostResponseDTO::getDate).reversed());
+        }
+        
         return new PostListResponseDTO(user_id,followedPost );
     }
+
 }
