@@ -1,9 +1,6 @@
 package com.bootcamp.be_java_hisp_w20_g6.service.Implement;
 
-import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowedListResponseDto;
-import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersCountResponseDto;
-import com.bootcamp.be_java_hisp_w20_g6.dto.response.FollowersListResponseDto;
-import com.bootcamp.be_java_hisp_w20_g6.dto.response.UserResponseDto;
+import com.bootcamp.be_java_hisp_w20_g6.dto.response.*;
 import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerExistsException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.FollowerNotFoundException;
 import com.bootcamp.be_java_hisp_w20_g6.exception.UserExistsException;
@@ -11,10 +8,12 @@ import com.bootcamp.be_java_hisp_w20_g6.exception.UserNotFoundException;
 import com.bootcamp.be_java_hisp_w20_g6.model.UserModel;
 import com.bootcamp.be_java_hisp_w20_g6.repository.UserRepository;
 import com.bootcamp.be_java_hisp_w20_g6.service.Interface.IUserService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,24 +61,24 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public FollowersListResponseDto getFollowersList(int id) {
+    public FollowersListResponseDto getFollowersList(int id, String order) {
         try{
             UserModel user = userRepository.getUserById(id);
             List<UserResponseDto> followers = getUserResponseDtos(user.getFollowers());
-            return new FollowersListResponseDto(id, user.getUser_name(), followers);
-
+            if(order == null)   return new FollowersListResponseDto(id, user.getUser_name(), followers);
+            return new FollowersListResponseDto(id, user.getUser_name(), orderReturnValues(followers, order));
         }catch(NullPointerException e){
             throw new UserExistsException("Usuario no existe.");
         }
     }
 
     @Override
-    public FollowedListResponseDto getFollowedList(int id) {
+    public FollowedListResponseDto getFollowedList(int id, String order) {
         try{
             UserModel user = userRepository.getUserById(id);
             List<UserResponseDto> followers = getUserResponseDtos(user.getFollowed());
-            return new FollowedListResponseDto(id, user.getUser_name(), followers);
-
+            if(order == null)   return new FollowedListResponseDto(id, user.getUser_name(), followers);
+            return new FollowedListResponseDto(id, user.getUser_name(), orderReturnValues(followers, order));
         }catch(NullPointerException e){
             throw new UserExistsException("Usuario no existe.");
         }
@@ -112,4 +111,18 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public List<UserResponseDto> orderReturnValues(List<UserResponseDto> listToOrder, String orderBy) {
+
+        switch(orderBy){
+            case "name_asc":
+                listToOrder.sort(Comparator.comparing(UserResponseDto::getUser_name));
+                break;
+            case "name_desc":
+                listToOrder.sort(Comparator.comparing(UserResponseDto::getUser_name).reversed());
+                break;
+
+        }
+        return listToOrder;
+    }
 }
