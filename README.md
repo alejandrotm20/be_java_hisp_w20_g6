@@ -23,11 +23,11 @@ Por otra parte, dado que se pretende una buena experiencia de usuario con respec
 ## Modelado
 
 ### Usuario
-![Modelado de clase Usuario](https://i.ibb.co/wyjvtrG/Diagrama-Sprint1-Pa-gina-1.jpg)
+![Modelado de clase Usuario](https://i.ibb.co/dBqjCJP/Diagrama-Sprint1-Pa-gina-1-3.jpg)
 
 ### Producto
-![Modelado de clase producto](https://i.ibb.co/Hg6zhBX/Diagrama-Sprint1-Pa-gina-1-2.jpg)
+![Modelado de clase producto](https://i.ibb.co/DKpNSpt/Diagrama-Sprint1-Pa-gina-1-4.jpg)
 
 ### Publicación
-![Modelado de la clase publicación](https://i.ibb.co/bz1VQ09/Diagrama-Sprint1-Pa-gina-1-1.jpg)
+![Modelado de la clase publicación](https://i.ibb.co/t4xHWZH/Diagrama-Sprint1-Pa-gina-1-5.jpg)
 
