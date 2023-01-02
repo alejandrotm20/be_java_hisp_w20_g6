@@ -31,3 +31,5 @@ Por otra parte, dado que se pretende una buena experiencia de usuario con respec
 ### Publicación
 ![Modelado de la clase publicación](https://i.ibb.co/t4xHWZH/Diagrama-Sprint1-Pa-gina-1-5.jpg)
 
+[Enlace al repo original](https://github.com/alejandrotm20/be_java_hisp_w20_g6)
+
