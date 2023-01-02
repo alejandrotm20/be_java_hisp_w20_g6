@@ -22,6 +22,6 @@ public class PostController {
     }
     @GetMapping("/followed/{userId}/list")
     public ResponseEntity<PostListResponseDTO> getPost(@PathVariable int userId, @RequestParam(required = false) String order) {
-        return new ResponseEntity<>(postService.postFollowedLastWeeks(userId, order), HttpStatus.OK);
+        return new ResponseEntity<>(postService.postFollowedLastWeeks(userId, order), HttpStatus.OK); 
     }
 }
