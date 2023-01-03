@@ -242,5 +242,6 @@ Ordenamiento por fecha ascendente y descendente
 |`date_desc` |Fecha descendente (de más nueva a más antigua)| 
 
 **NOTA**: Este ordenamiento solo aplica para **US0006**
+Responsable: Juan Carlos Ortiz
 
 
