@@ -244,8 +244,9 @@ Ordenamiento por fecha ascendente y descendente
 | `date_desc` | Fecha descendente (de más nueva a más antigua) | 
 
 **NOTA**: Este ordenamiento solo aplica para **US0006**
-Responsable: Juan Carlos Ortiz
 
+Responsable: Juan Carlos Ortiz
+***
 ## Colección de Postman 
 
 Para el testeo de esta api colocamos a disposición una colección de Postman en formato JSON que se puede encontrar en este proyecto, en el path: **src/java/resources/static/User Tests.postman_collection.json**
