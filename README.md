@@ -42,7 +42,7 @@ Poder realizar la acción de "Follow" (seguir) a un determinado vendedor
 |`POST`| `/users/{userId}/follow/{userIdToFollow}` | `/users/1/followers/count`
 
 
-RESPONSE: Status code 200 - DTO | Status code 400 - DTO
+RESPONSE: Status code 200 - Bodyless | Status code 400 - Bodyless
 
 RESPONSABLE: Daniela Villamizar
 ***
@@ -78,7 +78,7 @@ Obtener un listado de todos los usuarios que siguen a un determinado vendedor (�
 RESPONSE:
 ```json
 {
-    "user_id": 234,
+    "user_id": 1,
     "user_name": "vendedor1",
     "followers": [
         {
@@ -99,5 +99,148 @@ RESPONSE:
 RESPONSABLE: Daniel Andres Angel Rojas
 ***
 **US0004**: 
+Obtener un listado de todos los vendedores a los cuales sigue un determinado usuario (¿A quién sigo?)
+
+| METHOD | SIGN | EJEMPLO|
+|:--------|:----------|:----------|
+|`POST` | `/users/{userId}/followed/list`| `/users/1/followed/list` |
+
+RESPONSE:
+```json
+{
+    "user_id": 1,
+    "user_name": "vendedor1",
+    "followed": [
+        {
+            "user_id": 4698,
+            "user_name": "usuario1"
+        },
+        {
+            "user_id": 1536,
+            "user_name": "usuario2"
+        },
+        {
+            "user_id": 2236,
+            "user_name": "usuario3"
+        }
+    ]
+}
+```
+
+RESPONSABLE: Augusto Díaz
+***
+**US0005**: 
+Dar de alta una nueva publicación
+|METHOD | SIGN |
+|:-------|:------|
+|`POST` | `/products/post`|
+
+PAYLOAD:
+```json
+{
+    "user_id": 123,
+    "date": "29-04-2021",
+    "product": {
+        "product_id": 1,
+        "product_name": "Silla Gamer",
+        "type": "Gamer",
+        "brand": "Racer",
+        "color": "Red & Black",
+        "notes": "Special Edition"
+    },
+    "category": 100,
+    "price": 1500.50
+}
+```
+RESPONSE: Status code 200 (OK) | Status code 400 (Bad request)
+
+Responsable: Juan Carlos Ortiz
+***
+**US0006**: 
+Obtener un listado de las publicaciones realizadas por los vendedores que un usuario sigue en las últimas dos semanas (para esto tener en cuenta ordenamiento por fecha, publicaciones más recientes primero).
+
+| METHOD | SIGN | EJEMPLO |
+|:--------|:--------|:----------|
+|`GET` | `/products/followed/{userId}/list` | `/products/followed/1/list`|
+
+RESPONSE:
+```json
+{
+    "user_id": 4698,
+    "posts": [ {
+            "user_id": 123,
+            "post_id": 32,
+            "date": "01-05-2021",
+            "product": {
+                "product_id": 62,
+                "product_name": "Headset RGB Inalámbrico",
+                "type": "Gamer",
+                "brand": "Razer",
+                "color": "Green with RGB",
+                "notes": "Sin Batería"
+            },
+            "category": 120,
+            "price": 2800.69
+        },
+        {
+            "user_id": 234,
+            "post_id": 18,
+            "date": "29-04-2021",
+            "product": {
+                "product_id": 1,
+                "productName": "Silla Gamer",
+                "type": "Gamer",
+                "brand": "Racer",
+                "color": "Red & Black",
+                "notes": "Special Edition"
+            },
+            "category": 100,
+            "price": 15000.50
+        }
+    ]
+}
+```
+RESPOSANBLE: David Nuñez
+***
+**US0007**: 
+Poder realizar la acción de “Unfollow” (dejar de seguir) a un determinado vendedor.
+
+|METHOD | SIGN | EJEMPLO |
+|:-----|:--------|:--------|
+|`POST` | `/users/{userId}/unfollow/{userIdToUnfollow}` | ` /users/234/unfollow/123`|
+
+RESPONSE: Status code 200 (OK) - Bodyless | Status code 400 (Bad request) - Bodyless
+
+RESPONSABLE: Diana Parra
+***
+**US0008**:
+Ordenamiento alfabético ascendente y descendente
+
+|METHOD | EJEMPLOS|
+|:--------- | :--------|
+|`GET`  |`/users/{UserID}/followers/list?order=name_asc`<br>`/users/{UserID}/followers/list?order=name_desc`<br>`/users/{UserID}/followed/list?order=name_asc`<br>`/users/{UserID}/followed/list?order=name_desc`
+
+|ORDER | DESCRIPTION |
+|:------| :--------|
+|`name_asc` | Alfabético ascendente |
+|`name_desc` | Alfabético descendente |
+
+**NOTA**: Este ordenamiento solo aplica para **US0003** y **US0004**
+
+RESPONSABLE: Daniela Villamizar
+***
+**US0009**:
+Ordenamiento por fecha ascendente y descendente
+
+|METHOD|EJEMPLOS|
+|:-------|:-------|
+|`GET`|`/products/followed/{userId}/list?order=date_asc`<br>`/products/followed/{userId}/list?order=date_desc`|
+
+|ORDER|DESCRIPTION|
+|:------|:--------|
+|`date_asc`|Fecha ascendente (de más antigua a más nueva)|
+|`date_desc` |Fecha descendente (de más nueva a más antigua)| 
+
+**NOTA**: Este ordenamiento solo aplica para **US0006**
 
 
