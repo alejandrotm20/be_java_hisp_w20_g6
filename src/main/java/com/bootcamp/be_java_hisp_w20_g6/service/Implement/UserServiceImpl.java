@@ -68,15 +68,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public FollowedListResponseDto getFollowedList(int id, String order) {
-        try {
-            UserModel user = getUserById(id);
-            List<UserResponseDto> followers = getUserResponseDtos(user.getFollowed());
-            if (order == null)
-                return new FollowedListResponseDto(id, user.getUser_name(), followers);
-            return new FollowedListResponseDto(id, user.getUser_name(), orderReturnValues(followers, order));
-        } catch (NullPointerException e) {
-            throw new UserNotFoundException("Usuario no existe.");
-        }
+        UserModel user = getUserById(id);
+        List<UserResponseDto> followers = getUserResponseDtos(user.getFollowed());
+        if (order == null)
+            return new FollowedListResponseDto(id, user.getUser_name(), followers);
+        return new FollowedListResponseDto(id, user.getUser_name(), orderReturnValues(followers, order));
     }
 
     private List<UserResponseDto> getUserResponseDtos(List<Integer> userList) {
