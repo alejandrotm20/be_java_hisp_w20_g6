@@ -38,6 +38,12 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return el usuario del id
+     * @throws UserNotFoundException cuando no se encuentra al usuario
+     */
     public UserModel getUserById(int id) {
         UserModel user = userRepository.getUserById(id);
         if (user == null)
@@ -47,13 +53,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public FollowersCountResponseDto getFollowersCount(int id) {
-        try {
-            UserModel user = userRepository.getUserById(id);
-            return new FollowersCountResponseDto(id, user.getUser_name(), user.getFollowers().size());
-
-        } catch (NullPointerException e) {
-            throw new UserNotFoundException("Usuario no existe.");
-        }
+        UserModel user = getUserById(id);
+        return new FollowersCountResponseDto(id, user.getUser_name(), user.getFollowers().size());
     }
 
     @Override
@@ -68,7 +69,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public FollowedListResponseDto getFollowedList(int id, String order) {
         try {
-            UserModel user = userRepository.getUserById(id);
+            UserModel user = getUserById(id);
             List<UserResponseDto> followers = getUserResponseDtos(user.getFollowed());
             if (order == null)
                 return new FollowedListResponseDto(id, user.getUser_name(), followers);
@@ -81,7 +82,7 @@ public class UserServiceImpl implements IUserService {
     private List<UserResponseDto> getUserResponseDtos(List<Integer> userList) {
         List<UserResponseDto> followers = userList
                 .stream()
-                .map(u -> new UserResponseDto(u, userRepository.getUserById(u).getUser_name()))
+                .map(u -> new UserResponseDto(u, getUserById(u).getUser_name()))
                 .collect(Collectors.toList());
         return followers;
     }
